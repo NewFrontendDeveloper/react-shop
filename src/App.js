@@ -7,11 +7,12 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      cartData: [],
       items: [
         {
           id: 1,
           title: "Каромелька соленая",
-          img: '1.png',
+          img: 'Банофи.jpg',
           desc: "Натуральная соленая русская каромель",
           category: 'candy',
           price: '384.99'
@@ -19,7 +20,7 @@ class App extends React.Component {
         {
           id: 2,
           title: "Каромелька соленая",
-          img: '2.png',
+          img: 'восторг.jpg',
           desc: "Натуральная соленая русская каромель",
           category: 'candy',
           price: '384.99'
@@ -27,7 +28,7 @@ class App extends React.Component {
         {
           id: 3,
           title: "Каромелька соленая",
-          img: 'DSC006021.png',
+          img: 'йогурт кусок 2.jpg',
           desc: "Натуральная соленая русская каромель",
           category: 'candy',
           price: '384.99'
@@ -35,7 +36,7 @@ class App extends React.Component {
         {
           id: 4,
           title: "Каромелька соленая",
-          img: 'DSC006331.png',
+          img: 'йогуртовый с клубникой 1.jpg',
           desc: "Натуральная соленая русская каромель",
           category: 'candy',
           price: '384.99'
@@ -43,7 +44,7 @@ class App extends React.Component {
         {
           id: 5,
           title: "Каромелька соленая",
-          img: '6.png',
+          img: 'клубничный мохито 1.jpg',
           desc: "Натуральная соленая русская каромель",
           category: 'candy',
           price: '384.99'
@@ -51,7 +52,7 @@ class App extends React.Component {
         {
           id: 6,
           title: "Каромелька соленая",
-          img: 'Шоколадно-ореховый 5.png',
+          img: 'тирамису2.jpg',
           desc: "Натуральная соленая русская каромель",
           category: 'candy',
           price: '384.99'
@@ -59,15 +60,31 @@ class App extends React.Component {
 
       ]
     }
+    this.addToCart = this.addToCart.bind(this)
+    this.deleteCartData = this.deleteCartData.bind(this)
   }
   render() {
     return (
       <div className="main-cont">
-        <Header />
-        <Items items={this.state.items} />
+        <Header cartData={this.state.cartData} onDelete={this.deleteCartData} />
+        <Items items={this.state.items} onAdd={this.addToCart} />
         <Footer />
       </div>
     );
+  }
+
+  deleteCartData(id) {
+    this.setState({ cartData: this.state.cartData.filter(el => el.id !== id) })
+  }
+
+  addToCart(item) {
+    let isInArray = false
+    this.state.cartData.forEach(el => {
+      if (el.id === item.id)
+        isInArray = true
+    })
+    if (!isInArray)
+      this.setState({ cartData: [...this.state.cartData, item] })
   }
 }
 

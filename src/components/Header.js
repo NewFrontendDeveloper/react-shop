@@ -1,7 +1,29 @@
 import React, { useState } from 'react'
 import { FaShoppingBasket } from 'react-icons/fa'
+import CartData from './CartData'
 
-export default function Header() {
+const showCartData = (props) => {
+    let summa = 0
+    props.cartData.forEach(el => summa += +el.price)
+    return (
+        <div>
+            {props.cartData.map(el => (
+                <CartData onDelete={props.onDelete} key={el.id} item={el} />
+            ))}
+            <p className='total-cost'>Общая стоимость: {new Intl.NumberFormat().format(summa)}₽</p>
+        </div>
+    )
+}
+
+const showNothing = () => {
+    return (
+        <div className='empty'>
+            <h2>Корзина пуста</h2>
+        </div>
+    )
+}
+
+export default function Header(props) {
     let [cartOpen, setCartOpen] = useState(false)
 
     return (
@@ -19,6 +41,7 @@ export default function Header() {
                 </div>
                 {cartOpen && (
                     <div className='cont-shop-cart'>
+                        {props.cartData.length > 0 ? showCartData(props) : showNothing()}
 
                     </div>
                 )}
