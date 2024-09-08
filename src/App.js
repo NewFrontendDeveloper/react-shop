@@ -2,19 +2,21 @@ import Header from "./components/Header"
 import Footer from "./components/Footer"
 import React from "react";
 import Items from "./components/Items";
+import Categories from "./components/Categories";
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       cartData: [],
+      currentItems: [],
       items: [
         {
           id: 1,
           title: "Каромелька соленая",
           img: 'Банофи.jpg',
           desc: "Натуральная соленая русская каромель",
-          category: 'candy',
+          category: 'desserts',
           price: '384.99'
         },
         {
@@ -22,15 +24,15 @@ class App extends React.Component {
           title: "Каромелька соленая",
           img: 'восторг.jpg',
           desc: "Натуральная соленая русская каромель",
-          category: 'candy',
+          category: 'cakes',
           price: '384.99'
         },
         {
           id: 3,
           title: "Каромелька соленая",
-          img: 'йогурт кусок 2.jpg',
+          img: 'IMG_2769.jfif',
           desc: "Натуральная соленая русская каромель",
-          category: 'candy',
+          category: 'loaves',
           price: '384.99'
         },
         {
@@ -38,7 +40,7 @@ class App extends React.Component {
           title: "Каромелька соленая",
           img: 'йогуртовый с клубникой 1.jpg',
           desc: "Натуральная соленая русская каромель",
-          category: 'candy',
+          category: 'cakes',
           price: '384.99'
         },
         {
@@ -46,7 +48,7 @@ class App extends React.Component {
           title: "Каромелька соленая",
           img: 'клубничный мохито 1.jpg',
           desc: "Натуральная соленая русская каромель",
-          category: 'candy',
+          category: 'desserts',
           price: '384.99'
         },
         {
@@ -54,23 +56,37 @@ class App extends React.Component {
           title: "Каромелька соленая",
           img: 'тирамису2.jpg',
           desc: "Натуральная соленая русская каромель",
-          category: 'candy',
+          category: 'desserts',
           price: '384.99'
         },
 
       ]
     }
+    this.state.currentItems = this.state.items
     this.addToCart = this.addToCart.bind(this)
     this.deleteCartData = this.deleteCartData.bind(this)
+    this.chooseCategory = this.chooseCategory.bind(this)
   }
   render() {
     return (
       <div className="main-cont">
         <Header cartData={this.state.cartData} onDelete={this.deleteCartData} />
-        <Items items={this.state.items} onAdd={this.addToCart} />
+        <Categories chooseCategory={this.chooseCategory} />
+        <Items items={this.state.currentItems} onAdd={this.addToCart} />
         <Footer />
       </div>
     );
+  }
+
+  chooseCategory(category) {
+    if (category === 'all') {
+      this.setState({ currentItems: this.state.items })
+      return
+    }
+
+    this.setState({
+      currentItems: this.state.items.filter(el => el.category === category)
+    })
   }
 
   deleteCartData(id) {

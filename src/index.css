@@ -181,6 +181,23 @@ header .banner::before {
     position: absolute;
 }
 
+.categories div {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 50px;
+    background-color: #ff89a5;
+    color: white;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: 0.2s ease;
+}
+
+.categories div:hover {
+    border-color: rgb(255, 255, 255);
+    scale: 1.1;
+}
+
 main {
     display: flex;
     width: 100%;
